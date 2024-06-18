@@ -1,0 +1,9 @@
+langchain
+unstructured 
+fastapi
+uvicorn
+pydantic
+langchain-community
+langchain-core
+sentence-transformers
+chromadb==0.5.0
