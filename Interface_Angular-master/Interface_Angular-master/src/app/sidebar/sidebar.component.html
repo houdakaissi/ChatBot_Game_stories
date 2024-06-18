@@ -1,0 +1,362 @@
+<style>
+    .sidebar {
+        min-height: 100vh;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #f0f4f9;
+        padding: 25px 15px;
+    }
+
+    .sidebar .menu {
+        cursor: pointer;
+    }
+
+    .sidebar .new-chat {
+        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: -10px;
+        padding: 10px 15px;
+        background-color: #e6eaf1;
+        border-radius: 50px;
+        font-size: 14px;
+        color: grey;
+        cursor: pointer;
+        margin-left:-12px;
+
+    }
+
+    .sidebar .recent {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .recent-title {
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .sidebar .recent-entry {
+        display: flex;
+        align-items: start;
+        gap: 10px;
+        padding: 10px;
+        padding-right: 40px;
+        border-radius: 50px;
+        color: #282828;
+        cursor: pointer;
+    }
+
+    .sidebar .recent-entry:hover {
+        background-color: #e2e6eb;
+    }
+
+    .sidebar .bottom {
+
+        margin-top:140px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .bottom-item {
+        
+        padding-right: 10px;
+        cursor: pointer;
+        margin-top:120px;
+    }
+    
+    .sidebar .bottom-item1 {
+        padding-right: 12px;
+        cursor: pointer;
+        margin-top:10px;
+    }
+    .hidden {
+  display: none;
+}
+
+    .sidebar .bottom-item2 {
+        padding-right: 12px;
+        cursor: pointer;
+        margin-top:10px;
+    }
+
+    .sidebar img {
+        width: 20px;
+    }
+</style>
+
+<div class="sidebar" >
+  
+    <div class="top" >
+        <div (click)="sidebarExtended = !sidebarExtended"><img class="menu" src="https://cdn-icons-png.freepik.com/512/2976/2976215.png"></div>
+       
+        <div class="new-chat" (click)="extended = !extended">
+            
+        
+        </div>
+       
+    <div class="bottom">
+        <h4 *ngIf="  sidebarExtended">Sign up or log in</h4>
+
+        <div *ngIf="  sidebarExtended">Save your chat history,</div>
+        
+        <div *ngIf="  sidebarExtended"> and personalize</div>
+         <div *ngIf="  sidebarExtended"> your experience.</div>  
+        <div class="bottom-item"  (click)="extended2 = !extended2">
+            
+            <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/question-2524778-2140529.png?f=webp">
+            <span *ngIf="  sidebarExtended" (click)="navigateToSignUp()"> Sign up</span>
+        </div>
+        <div class="bottom-item1"  (click)="extended3 = !extended3">
+            <img src="https://static-00.iconduck.com/assets.00/history-icon-512x512-uoq7tc1a.png">
+            <span *ngIf="!extended3 && sidebarExtended" > Log in </span>
+        </div>
+        <div class="bottom-item2"  (click)="extended4 = !extended4">
+            <img src="https://static-00.iconduck.com/assets.00/settings-icon-2048x2046-cw28eevx.png">
+            <span *ngIf="!extended4 && sidebarExtended" >  Settings</span>
+        </div>
+    </div>
+</div>
+
+<style> 
+    .main{
+        flex:1;
+        min-height:100vh;
+        padding-bottom:15vh;
+        position:relative;
+    
+    
+    }
+    .main .nav{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        font-size:22px;
+        padding:20px;
+        color:#585858;
+    }
+    .main .nav img{
+        width:40px;
+        border-radius:50%;
+    }
+    </style>
+    
+    
+    
+    <style> 
+        .main{
+            flex:1;
+            min-height:100vh;
+            padding-bottom:15vh;
+            position:relative;
+        
+        
+        }
+        .main .nav{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            font-size:22px;
+            padding:20px;
+            color:#585858;
+        }
+        .main .nav img{
+            width:40px;
+            border-radius:50%;
+        }
+        .main-container{
+                  max-width:900px;
+                  margin:auto;
+        }
+        .main-container .gret{
+            margin:50px 0px;
+            font-size:56px;
+            color:#c4c7c5;
+            font-weight:500;
+            padding:20px;
+        }
+        .main-container .gret span{
+            background: -webkit-linear-gradient(16deg,#4b90ff,#ff5546);
+               -webkit-background-clip: text;
+               -webkit-text-fill-color: transparent;
+        }
+        .main-container .cards {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+    gap: 15px;
+    padding: 20px;
+    overflow-x: auto; /* Add horizontal scrolling if needed */
+}
+
+.main-container .card {
+    width: 180px; /* Set a fixed width for each card */
+    height: 200px;
+    padding: 15px;
+    background-color: #f0f4f9;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.main-container .card img {
+    width: 35px;
+    padding: 5px;
+    position: absolute;
+    background-color: white;
+    border-radius: 20px;
+    bottom: 10px;
+    right: 10px;
+}
+.main-container .card p{
+    color:#585858;
+    font-size:17px;
+}
+.main-container .card:hover{
+background-color:#dfe4ea;
+}
+.main-bottom{
+
+position: relative ;
+    bottom: 0;
+   margin-bottom:200px;
+    width: 100%;
+    max-width: 900px;
+    padding: 0px 20px;
+    margin: auto;
+   
+ 
+}
+.search-box{
+display:flex;
+bottom:200px;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+background-color:#f0f4f9;
+padding:10px 20px;
+border-radius:50px;
+}
+.search-box img{
+width:34px;
+cursor:pointer;
+
+
+}
+
+.search-box input{
+flex:1;
+background: transparent;
+border:none;
+outline:none;
+padding:8px;
+font-size:18px;
+}
+
+.search-box div{
+display:flex;
+align-items: center;
+gap:15px;
+
+}
+
+
+
+
+
+
+
+
+
+
+        </style>
+        
+        
+        
+     
+        
+        
+        <div class="main"  style="display:flex;position:absolute;top:-270px; left:-190px; ">
+            <div class="nav">
+                <img   style="display:flex;position:relative; left:423px;"  src="https://w7.pngwing.com/pngs/959/98/png-transparent-chatbot-internet-bot-bojangles-roadhouse-blues-robot-github-robot-electronics-computer-wallpaper-computer-program-thumbnail.png">
+                <p style="  background: linear-gradient(to right, 
+                violet,
+                indigo,
+                blue,
+                green,
+                
+               
+                red);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent; display:flex;position:relative; left:430px;">SHH</p>
+               
+            </div>
+         </div>  
+            <div class="main-container" style="display:flex;position:absolute;top:100px; left:340px; ">
+                <div class="greet">
+                    <div style="position:relative;bottom:120px;"class="gret">
+                    <p><span>Bonjour,Mon ami</span></p>
+                    <p>Comment je peux vous aidez aujourdhui </p>
+                    </div>
+                    <div style="position:relative;bottom:220px;" class="cards">
+                        <div style="width:100px;height:100px;" class="card">
+                            <p >  </p>
+                            <img   src="https://static-00.iconduck.com/assets.00/compass-icon-512x512-s9cq2sum.png">
+                        </div>
+                        <div style="width:100px;height:100px;" class="card">
+                            <p> </p>
+                            <img   src="https://cdn-icons-png.flaticon.com/512/702/702814.png">
+                        </div>
+                        <div style="width:100px;height:100px;" class="card">
+                            <p>  </p>
+                            <img   src="https://static.thenounproject.com/png/60326-200.png">
+                        </div>
+                        <div style="width:100px;height:100px;" class="card">
+                            <p>  </p>
+                            <img   src="https://static-00.iconduck.com/assets.00/source-code-icon-512x512-qkt5a56h.png">
+                        </div>
+                    </div>
+                    <div class="main-bottom">
+                        <div style="position:relative;bottom:160px;" class="search-box">
+                            <input type="text" [(ngModel)]="searchInput"  >
+                            <div>
+                              
+                               
+                              <img src="https://t4.ftcdn.net/jpg/01/44/68/93/360_F_144689379_kuYWlE9j1PRmFxVnlDTiMfZj5N3vZZr9.jpg" (click)="updateRecentEntry()">
+                            </div>
+                          </div>
+                          
+                        
+                        <p class="bottom-info">
+                                    
+                        </p>
+
+                    </div>
+                </div>
+              
+            
+            
+ 
+        
+
+
+
+
+<script>
+
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Find the input field and target element using Angular's querySelector method
+                    const inputField = document.querySelector('.search-box input');
+                    const targetElement = document.querySelector('.recent-entry span');
+                
+                    // Listen for clicks on the image icons
+                    const imageIcons = document.querySelectorAll('.search-box img');
+                    imageIcons.forEach(icon => {
+                        icon.addEventListener('click', function() {
+                            // Update the content of the target element with the value from the input field
+                            targetElement.textContent = inputField.value;
+                        });
+                    });
+                });
+              </script>  
+                

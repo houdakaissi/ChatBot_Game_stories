@@ -1,0 +1,515 @@
+
+  
+<style>
+    .sidebar {
+        min-height: 100vh;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #f6eefc;
+        padding: 25px 15px;
+    }
+
+    .sidebar .menu {
+        cursor: pointer;
+    }
+
+    .sidebar .new-chat {
+        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: -10px;
+        padding: 10px 15px;
+        background-color: #e6eaf1;
+        border-radius: 50px;
+        font-size: 14px;
+        color: grey;
+        cursor: pointer;
+        margin-left:-12px;
+
+    }
+
+    .sidebar .recent {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .recent-title {
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .sidebar .recent-entry {
+        display: flex;
+        align-items: start;
+        gap: 10px;
+        padding: 10px;
+        padding-right: 40px;
+        border-radius: 50px;
+        color: #282828;
+        cursor: pointer;
+    }
+
+    .sidebar .recent-entry:hover {
+        background-color: #e2e6eb;
+    }
+
+    .sidebar .bottom {
+        margin-top:240px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .bottom-item {
+        
+        padding-right: 10px;
+        cursor: pointer;
+        margin-top:120px;
+    }
+    
+    .sidebar .bottom-item1 {
+        padding-right: 12px;
+        cursor: pointer;
+        margin-top:10px;
+    }
+    .hidden {
+  display: none;
+}
+
+    .sidebar .bottom-item2 {
+        padding-right: 12px;
+        cursor: pointer;
+        margin-top:10px;
+    }
+
+    .sidebar img {
+        width: 20px;
+    }
+</style>
+
+<div class="sidebar" >
+  
+    <div class="top" >
+        <div (click)="sidebarExtended = !sidebarExtended"><img class="menu" src="https://cdn-icons-png.freepik.com/512/2976/2976215.png"></div>
+       
+        <div class="new-chat" (click)="extended = !extended">
+            <img src="https://static-00.iconduck.com/assets.00/plus-sign-icon-2048x2048-mp0pz4g8.png">
+            <p   (click)="createNewFolder()"  *ngIf=" sidebarExtended" style="margin-left: 5px;">New chat</p>
+        </div>
+        <div style="margin-top: 40px;">Recent
+            <div (click)="toggleConversation(text)" [ngClass]="{'truncate-text': text.length > 100}" class="a" *ngFor="let text of savedTexts"> {{ text }}</div>
+        </div>
+        <div class="chat-messages" *ngIf="showChatMessages && selectedFolder">
+            <div *ngIf="selectedFolder.messages.length > 0">
+                <div *ngFor="let message of selectedFolder.messages" class="chat-message">
+                    <img style="width: 40px;" src="https://cdn-icons-png.freepik.com/512/7153/7153150.png">
+                    <div class="message">{{ message.content }}</div>
+                </div>
+            </div>
+        </div>
+        
+   
+    <div class="recent">
+            <p class="recent-title"></p>
+            <div class="recent-entry"  (click)="extended1 = !extended1">
+               
+                <span *ngIf="!extended1 && sidebarExtended">
+                   
+                    <ng-container *ngFor="let entry of recentEntries; let last = last">
+                        <img src="https://cdn-icons-png.flaticon.com/128/331/331229.png">
+                        {{ truncateText(entry, 10) }}
+                       <div> <span *ngIf="!last"> </span></div>
+                      </ng-container>
+                </span>
+
+            </div>
+        </div>
+    <div class="bottom">
+       
+      
+        <div class="bottom-item1"  (click)="extended3 = !extended3">
+            <img src="https://static-00.iconduck.com/assets.00/history-icon-512x512-uoq7tc1a.png">
+         
+            <span *ngIf=" sidebarExtended" (click)="logout()"> Log out </span>
+        </div>
+        <div class="bottom-item2"  (click)="extended4 = !extended4">
+            <img src="https://static-00.iconduck.com/assets.00/settings-icon-2048x2046-cw28eevx.png">
+            <span *ngIf="!extended4 && sidebarExtended" >  Settings</span>
+        </div>
+    </div>
+</div>
+
+<style> 
+    .main{
+        flex:1;
+        min-height:100vh;
+        padding-bottom:15vh;
+        position:relative;
+    
+    
+    }
+    .main .nav{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        font-size:22px;
+        padding:20px;
+        color:#585858;
+    }
+    .main .nav img{
+        width:40px;
+        border-radius:50%;
+    }
+    </style>
+    
+    
+    
+    <style> 
+        .main{
+            flex:1;
+            min-height:100vh;
+            padding-bottom:15vh;
+            position:relative;
+        
+        
+        }
+        .main .nav{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            font-size:22px;
+            padding:20px;
+            color:#585858;
+        }
+        .main .nav img{
+            width:40px;
+            border-radius:50%;
+        }
+        .main-container{
+                  max-width:900px;
+                  margin:auto;
+                 
+        }
+        .main-container .gret{
+            margin:50px 0px;
+            font-size:56px;
+            color:#c4c7c5;
+            font-weight:500;
+            padding:20px;
+            position:relative;
+    bottom:130px;
+            
+        }
+        .main-container .gret span{
+            background: -webkit-linear-gradient(16deg,#4b90ff,#ff5546);
+               -webkit-background-clip: text;
+               -webkit-text-fill-color: transparent;
+        }
+        .main-container .cards {
+    display: flex;
+    position:relative;
+    bottom:850px;
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+    gap: 15px;
+    padding: 20px;
+    overflow-x: auto; /* Add horizontal scrolling if needed */
+}
+
+.main-container .card {
+    width: 180px; /* Set a fixed width for each card */
+    height: 200px;
+    padding: 15px;
+    background-color: #f0f4f9;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.main-container .card img {
+    width: 35px;
+    padding: 5px;
+    position: absolute;
+    background-color: white;
+    border-radius: 20px;
+    bottom: 10px;
+    right: 10px;
+}
+.main-container .card p{
+    color:#585858;
+    font-size:17px;
+}
+.main-container .card:hover{
+background-color:#dfe4ea;
+}
+.main-bottom {
+    position: fixed;
+    bottom: 0;
+   
+    width: 100%;
+    max-width: 900px;
+    padding: 0px 20px;
+    margin: auto;
+    z-index: 999; /* Ensure it stays on top of other content */
+}
+
+
+.search-box{
+    display:flex;
+    align-items:center;
+justify-content:space-between;
+gap:20px;
+ 
+background-color:#f0f4f9;
+padding:10px 20px;
+border-radius:50px;
+ 
+}
+.search-box img{
+width:34px;
+cursor:pointer;
+
+
+}
+
+.search-box input{
+    flex:1;
+background: transparent;
+border:none;
+outline:none;
+padding:8px;
+ 
+font-size:18px;
+}
+
+.search-box div{
+display:flex;
+align-items: center;
+gap:15px;
+
+}
+
+
+
+
+
+
+
+
+
+
+        </style>
+        
+        
+        
+     
+        
+        
+        <div class="main"  style="display:flex;position:absolute;top:-270px; left:-190px; ">
+            <div class="nav">
+                <img   style="display:flex;position:relative; left:423px;"  src="https://w7.pngwing.com/pngs/959/98/png-transparent-chatbot-internet-bot-bojangles-roadhouse-blues-robot-github-robot-electronics-computer-wallpaper-computer-program-thumbnail.png">
+                <p style="  background: linear-gradient(to right, 
+                violet,
+                indigo,
+                blue,
+                green,
+                
+               
+                red);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent; display:flex;position:relative; left:430px;">SHH</p>
+                <img   style="display:flex;position:relative; left:1370px;" src="https://cdn-icons-png.freepik.com/512/7153/7153150.png">
+            </div>
+         </div>  
+       
+         <div class="main-container" style="display:flex;position:absolute;top:100px; left:340px; ">
+            <div class="greet"  >
+                <div class="gret" *ngIf="!areMessagesPresent ">
+              
+                </div>
+                <div class="cards" >
+                    <div class="card"   >
+                        <p>Suggest beautiful places to see on an upcoming road trip</p>
+                        <img   src="https://static-00.iconduck.com/assets.00/compass-icon-512x512-s9cq2sum.png">
+                    </div>
+                    <div class="card"   >
+                        <p>Suggest beautiful places to see on an upcoming road trip</p>
+                        <img   src="https://cdn-icons-png.flaticon.com/512/702/702814.png">
+                    </div>
+                    <div class="card"   >
+                        <p>Suggest beautiful places to see on an upcoming road trip</p>
+                        <img   src="https://static.thenounproject.com/png/60326-200.png">
+                    </div>
+                    <div class="card"  >
+                        <p>Suggest beautiful places to see on an upcoming road trip</p>
+                        <img   src="https://static-00.iconduck.com/assets.00/source-code-icon-512x512-qkt5a56h.png">
+                    </div>
+                   
+                </div>
+            </div>
+   <!-- HTML template -->
+<!-- HTML template --><!-- HTML template --><!-- HTML template --><!-- HTML template -->
+ 
+    
+    <!-- Chat messages --><!-- HTML template -->
+<div class="main-bottom">
+    <!-- Conversation folder and new button -->
+    <div class="conversation-folder" >
+      
+    </div>
+    
+    
+    <!-- Chat messages -->
+    <div class="chat-messages" #chatMessages>
+        <div *ngIf="selectedFolder && selectedFolder.messages.length > 0">
+            <div *ngFor="let message of selectedFolder.messages" class="chat-message"  >
+                <img style="width: 40px;" src="https://cdn-icons-png.freepik.com/512/7153/7153150.png">
+           
+             
+                <div *ngFor="let item of questionResponses">
+                    <div class="message">{{ item.question }}</div>
+                    <div>
+                        <h2>Response:</h2>
+                        <p>{{ item.response }}</p>
+                    </div>
+                </div>
+                
+        </div>
+        <div class="gret" *ngIf="!selectedFolder || selectedFolder.messages.length === 0">
+            <p><span>Bonjour, mon ami</span></p>
+            <p>Comment puis-je vous aider aujourd'hui?</p>
+            
+        </div>
+    </div>
+     
+    <!-- Input box for typing messages -->
+    <form (ngSubmit)="onSubmit()">
+      
+    <div class="search-box">
+     
+        <input  id="query" [(ngModel)]="query" name="query" required [(ngModel)]="inputText" type="text" [(ngModel)]="messageInput" (ngModelChange)="truncateInput($event)">
+        
+            <div>
+      
+            <button type="submit" (click)="sendMessage(); saveText()">ok</button>
+            <img type="submit" (click)="sendMessage()" (click)="saveText()"  src="https://w7.pngwing.com/pngs/368/96/png-transparent-fly-messager-send-communication-email-message-glyphs-icon.png">
+        </div>
+    </div>
+    </form>
+   
+    <!-- Display prompts -->
+    <div *ngIf="selectedFolder && selectedFolder.messages.length > 0">
+     
+      
+    </div>
+</div>
+
+
+                        <p class="bottom-info">
+                                    
+                        </p>
+
+                    </div>
+                
+              
+            
+            
+ 
+        
+
+
+
+
+<script>
+
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Find the input field and target element using Angular's querySelector method
+                    const inputField = document.querySelector('.search-box input');
+                    const targetElement = document.querySelector('.recent-entry span');
+                
+                    // Listen for clicks on the image icons
+                    const imageIcons = document.querySelectorAll('.search-box img');
+                    imageIcons.forEach(icon => {
+                        icon.addEventListener('click', function() {
+                            // Update the content of the target element with the value from the input field
+                            targetElement.textContent = inputField.value;
+                        });
+                    });
+                });
+              </script>  
+                
+
+
+
+
+
+
+
+
+
+<style> 
+.hidden {
+    display: none;
+}
+
+.conversation-folder {
+    cursor: pointer;
+}
+.chat-messages {
+    height: 450px; /* Adjust height as needed */
+    overflow-y: auto; /* Add vertical scrollbar when needed */
+}
+ 
+
+
+                .chat-container {
+                    margin-bottom:500px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    max-width: 400px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                  }
+                  
+                  .chat-message {
+                    
+                    padding: 10px;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
+                  }
+                  
+                  input[type="text"], button {
+                    margin-top: 10px;
+                  }
+                  
+                  button {
+                    cursor: pointer;
+                  }
+
+              
+
+
+ 
+
+
+                  .message {
+                   
+                    background-color: #7FFF00;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+ 
+}
+.truncate-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px; /* Change this value as per your requirement */
+  }
+
+</style>
+ 
